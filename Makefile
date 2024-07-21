@@ -11,5 +11,7 @@ download:
 	curl -C - -o $(SRC_DIR)/$(SRC_FILE) https://cyberjapandata.gsi.go.jp/xyz/optimal_bvmap-v1/$(SRC_FILE)
 
 dump:
-	tippecanoe-decode -l $(LAYER) -Z $(ZOOM) $(SRC_DIR)/$(SRC_FILE) | tippecanoe-json-tool | \
-	ogr2ogr -of FlatGeobuf $(DST_DIR)/$(DST_FILE) /vsistdin/
+	tippecanoe-decode -l $(LAYER) -Z $(ZOOM) $(SRC_DIR)/$(SRC_FILE) | tippecanoe-json-tool > dump.geojsons
+
+fgb:
+	ogr2ogr -of FlatGeobuf $(DST_DIR)/$(DST_FILE) dump.geojsons
